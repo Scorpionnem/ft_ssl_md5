@@ -26,7 +26,7 @@ libftgetopt:
 	else \
 		echo "\033[31;1;4mlibftgetopt Not Found\033[0m"; \
 		echo "\033[31;1mCloning libftgetopt from github\033[0m"; \
-		git clone https://github.com/Scorpionnem/ft_options.git $(LIBFTGETOPTDIR); \
+		git clone https://github.com/Scorpionnem/libftgetopt $(LIBFTGETOPTDIR); \
 		make -C $(LIBFTGETOPTDIR) ;\
 	fi
 
