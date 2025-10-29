@@ -1,0 +1,7 @@
+libftgetopt/
+obj/
+ft_ssl
+.vscode/
+*.o
+*.d
+
