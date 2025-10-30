@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:47:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:53:00 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:50:17 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define CTX_H
 
 # include "libftgetopt.h"
+# include "libft.h"
 
 #endif
