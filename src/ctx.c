@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/23 14:54:43 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/23 18:45:31 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	ctx_init(t_ctx *ctx, char ***av)
 		return (-1);
 	}
 
+	if (!*av[0])
+	{
+		opt_ctx_delete(&ctx->opt_ctx);
+		dprintf(2, "ft_ssl: command required (see help)\n");
+		return (-1);
+	}
+
 	return (0);
 }
 
@@ -38,9 +45,17 @@ void	ctx_delete(t_ctx *ctx)
 
 void	print_help()
 {
-	printf("\nUsage:\n  ./ft_ssl [-h, -?]\n\n");
+	printf("\nUsage:\n  ./ft_ssl <command> [options]\n\n");
+	printf("Commands:\n");
+	printf("  md5\n");
+	printf("  sha256\n");
+	printf("\n");
 	printf("Options:\n");
-	printf("  -? -h --help\t\tshow help message and exit\n");
+	printf("  -h\t\tshow help message and exit\n");
+	printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	printf("  -q\t\tquiet mode\n");
+	printf("  -r\t\treverse the format of the output\n");
+	printf("  -s <string>\tprint the sum of <string>\n");
 	printf("\n");
 }
 
@@ -64,4 +79,3 @@ int	ctx_init_opts(t_ctx *ctx, char ***av)
 	}
 	return (0);
 }
-
