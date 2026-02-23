@@ -6,16 +6,32 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/23 18:45:31 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 00:07:01 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 int		ctx_init_opts(t_ctx *ctx, char ***av);
 void	print_help();
+
+t_hash_func	get_hash_func(char *id)
+{
+	#define COMMANDS_COUNT 2
+	const struct {char *id; t_hash_func fn;} commands_to_funcs[COMMANDS_COUNT] =
+	{
+		{.id = "md5", .fn = md5},
+		{.id = "sha256", .fn = sha256},
+	};
+
+	for (int i = 0; i < COMMANDS_COUNT; i++)
+		if (!strcmp(commands_to_funcs[i].id, id))
+			return (commands_to_funcs[i].fn);
+	return (NULL);
+}
 
 int	ctx_init(t_ctx *ctx, char ***av)
 {
@@ -28,10 +44,17 @@ int	ctx_init(t_ctx *ctx, char ***av)
 		return (-1);
 	}
 
-	if (!*av[0])
+	if (*av[0] == NULL)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
-		dprintf(2, "ft_ssl: command required (see help)\n");
+		dprintf(2, "ft_ssl: command required\n");
+		return (-1);
+	}
+	ctx->fn = get_hash_func(*av[0]);
+	if (ctx->fn == NULL)
+	{
+		opt_ctx_delete(&ctx->opt_ctx);
+		dprintf(2, "ft_ssl: Unknown command (%s)\n", *av[0]);
 		return (-1);
 	}
 

@@ -1,38 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctx.h                                              :+:      :+:    :+:   */
+/*   md5.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 00:03:52 by mbatty           ###   ########.fr       */
+/*   Created: 2026/02/24 00:01:19 by mbatty            #+#    #+#             */
+/*   Updated: 2026/02/24 00:01:43 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#define UNUSED(x)	_unused_##x __attribute__((unused))
-
-#include "opt.h"
-#include "md5.h"
-#include "sha256.h"
-
-typedef char *(*t_hash_func)(char*);
-
-typedef struct	s_ctx
-{
-	t_hash_func	fn;
-
-	t_opt_ctx			opt_ctx;
-
-	t_opt				help;
-
-	t_opt				echo;
-	t_opt				quiet;
-	t_opt				reverse;
-	t_opt				string;
-}	t_ctx;
-
-int		ctx_init(t_ctx *ctx, char ***av);
-void	ctx_delete(t_ctx *ctx);
+char	*md5(char *input);

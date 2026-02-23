@@ -2,7 +2,7 @@ NAME :=	ft_ssl
 
 CC :=	cc
 CFLAGS :=	-g -MP -MMD -Wall -Wextra -Werror # -fsanitize=address -fno-omit-frame-pointer
-LFLAGS :=
+LFLAGS :=	-lm
 
 ###
 
@@ -11,6 +11,8 @@ INCLUDE_DIRS :=	inc/\
 SRCS :=	main\
 		opt\
 		ctx\
+		md5\
+		sha256\
 
 ###
 
