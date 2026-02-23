@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/23 11:39:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/23 14:54:12 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ typedef struct	s_ctx
 	t_opt_ctx			opt_ctx;
 
 	t_opt				help;
+
+	t_opt				echo;
+	t_opt				quiet;
+	t_opt				reverse;
+	t_opt				string;
 }	t_ctx;
 
 int		ctx_init(t_ctx *ctx, char ***av);
