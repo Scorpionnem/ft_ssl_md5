@@ -1,63 +1,57 @@
-NAME = ft_ssl
+NAME :=	ft_ssl
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CC :=	cc
+CFLAGS :=	-g -MP -MMD -Wall -Wextra -Werror # -fsanitize=address -fno-omit-frame-pointer
+LFLAGS :=
 
-INCLUDES =	-I ./includes/\
-			-I ./libft/\
-			-I ./libftgetopt/includes/\
+###
 
-SRCS =	src/main.c
+INCLUDE_DIRS :=	inc/\
 
-OBJDIR = obj
-OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
-DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
+SRCS :=	main\
+		opt\
+		ctx\
 
-LIBFT = ./libft/libft.a
+###
 
-LIBFTGETOPTDIR = libftgetopt
-LIBFTGETOPT = ./$(LIBFTGETOPTDIR)/libftgetopt.a
+INCLUDE_DIRS :=	$(addprefix -I, $(INCLUDE_DIRS))
 
-all: libftgetopt $(LIBFT) $(NAME)
+SRCS :=	$(addprefix src/, $(SRCS))
+SRCS :=	$(addsuffix .c, $(SRCS))
 
-libftgetopt:
-	@if ls | grep -q "$(LIBFTGETOPTDIR)"; then \
-		echo "\033[32;1;4mlibftgetopt Found\033[0m"; \
-	else \
-		echo "\033[31;1;4mlibftgetopt Not Found\033[0m"; \
-		echo "\033[31;1mCloning libftgetopt from github\033[0m"; \
-		git clone https://github.com/Scorpionnem/libftgetopt $(LIBFTGETOPTDIR); \
-		make -C $(LIBFTGETOPTDIR) ;\
-	fi
+###
 
-re: fclean all
+OBJ_DIR :=	obj
 
-$(LIBFT):
-	@make -C ./libft bonus
+OBJS =	$(SRCS:%.c=$(OBJ_DIR)/%.o)
+DEPS =	$(SRCS:%.c=$(OBJ_DIR)/%.d)
+
+###
+
+compile:
+	@make -j all --no-print-directory
+
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT) $(LIBFTGETOPT)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(INCLUDE_DIRS) -o $@ $^
 
-$(OBJDIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	@echo Compiling $<
-	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+	@echo Compiling $@
+	@$(CC) $(CFLAGS) $(INCLUDE_DIRS) -c $< -o $@
 
-clean:
-	@make -C ./libft clean
-	@echo Cleaning objects
-	@rm -rf $(OBJDIR)
+re: fclean compile
 
 fclean: clean
-	@make -C ./libft fclean
-	@echo Cleaning $(NAME)
+	@echo Removed $(NAME)
 	@rm -rf $(NAME)
-	@rm -rf $(LIBFTGETOPTDIR)
 
-run: $(NAME)
-	./$(NAME)
+clean:
+	@echo Removed $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
 
-.PHONY: all clean fclean re run libftgetopt
+.PHONY: all clean fclean re compile
 
 -include $(DEPS)

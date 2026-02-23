@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbatty <mewen.mewen@hotmail.com>           +#+  +:+       +#+        */
+/*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 14:14:14 by mbatty            #+#    #+#             */
-/*   Updated: 2024/10/15 08:54:05 by mbatty           ###   ########.fr       */
+/*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
+/*   Updated: 2026/02/23 11:39:42 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#pragma once
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+#define UNUSED(x)	_unused_##x __attribute__((unused))
+
+#include "opt.h"
+
+typedef struct	s_ctx
 {
-	size_t	i;
+	t_opt_ctx			opt_ctx;
 
-	i = 0;
-	while (src[i] != '\0' && i + 1 < size)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (size > 0)
-		dest[i] = '\0';
-	return (ft_strlen(src));
-}
+	t_opt				help;
+}	t_ctx;
+
+int		ctx_init(t_ctx *ctx, char ***av);
+void	ctx_delete(t_ctx *ctx);

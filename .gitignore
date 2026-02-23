@@ -1,7 +1,5 @@
-libftgetopt/
 obj/
-ft_ssl
-.vscode/
 *.o
 *.d
 
+ft_ssl
