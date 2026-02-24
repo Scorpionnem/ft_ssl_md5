@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 00:07:01 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 10:38:19 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,16 @@ int	ctx_init(t_ctx *ctx, char ***av)
 		dprintf(2, "ft_ssl: Unknown command (%s)\n", *av[0]);
 		return (-1);
 	}
+	ctx->fn_str = strdup(*av[0]);
+
+	(*av)++;
 
 	return (0);
 }
 
 void	ctx_delete(t_ctx *ctx)
 {
+	free(ctx->fn_str);
 	opt_ctx_delete(&ctx->opt_ctx);
 }
 

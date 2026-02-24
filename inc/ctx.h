@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 10:12:55 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 10:37:26 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef char *(*t_hash_func)(char*, uint32_t);
 typedef struct	s_ctx
 {
 	t_hash_func	fn;
+	char		*fn_str;
 
 	t_opt_ctx			opt_ctx;
 
