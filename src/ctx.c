@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 11:33:06 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 11:46:05 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,13 @@ void	ctx_delete(t_ctx *ctx)
 void	print_help()
 {
 	printf("\nUsage:\n  ./ft_ssl <command> [options]\n\n");
-	printf("Commands:\n");
+	printf("Standard commands:\n");
+	printf("\n");
+	printf("Message Digest commands:\n");
 	printf("  md5\n");
 	printf("  sha256\n");
+	printf("\n");
+	printf("Cipher commands:\n");
 	printf("\n");
 	printf("Options:\n");
 	printf("  -h\t\tshow help message and exit\n");
