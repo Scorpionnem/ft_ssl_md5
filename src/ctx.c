@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 10:38:19 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 11:33:06 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ctx_init(t_ctx *ctx, char ***av)
 	if (*av[0] == NULL)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
-		dprintf(2, "ft_ssl: command required\n");
+		dprintf(2, "ft_ssl: command required (see -h)\n");
 		return (-1);
 	}
 	ctx->fn = get_hash_func(*av[0]);

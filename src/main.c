@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 11:02:02 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 11:37:05 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,22 @@ int	process_stdin(t_ctx *ctx)
 		buf[total_read] = 0;
 	}
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
-		printf("%s (stdin) = ", ctx->fn_str);
+	{
+		if (ctx->echo._bool)
+			printf("%s (\"%s\") = ", ctx->fn_str, buf);
+		else
+			printf("%s (stdin) = ", ctx->fn_str);
+	}
 
 	process(ctx, buf, total_read);
 
 	if (ctx->reverse._bool && !ctx->quiet._bool)
-		printf(" stdin");
+	{
+		if (ctx->echo._bool)
+			printf(" \"%s\"", buf);
+		else
+			printf(" stdin");
+	}
 	printf("\n");
 
 	free(buf);
@@ -119,7 +129,7 @@ int	main(int UNUSED(ac), char **av)
 		process_string(&ctx, ctx.string._str);
 	if (*av)
 		process_av(&ctx, av);
-	else if (!ctx.string._str)
+	else if (!ctx.string._str || ctx.echo._bool)
 		process_stdin(&ctx);
 
 	ctx_delete(&ctx);
