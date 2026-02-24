@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 10:46:43 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 11:02:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include <errno.h>
 
 int	process(t_ctx *ctx, char *input, uint32_t len)
@@ -60,6 +61,7 @@ int	process_av(t_ctx *ctx, char **av)
 		printf("\n");
 
 		munmap(input, stats.st_size);
+		close(fd);
 		av++;
 	}
 	return (0);
@@ -79,6 +81,33 @@ int	process_string(t_ctx *ctx, char *str)
 	return (0);
 }
 
+int	process_stdin(t_ctx *ctx)
+{
+	char	*buf = calloc(1, 1);
+	int		total_read = 0;
+
+	while (1)
+	{
+		int bytes = read(0, buf + total_read, 1);
+		if (bytes <= 0)
+			break ;
+		total_read += bytes;
+		buf = realloc(buf, total_read + 1);
+		buf[total_read] = 0;
+	}
+	if (!ctx->reverse._bool && !ctx->quiet._bool)
+		printf("%s (stdin) = ", ctx->fn_str);
+
+	process(ctx, buf, total_read);
+
+	if (ctx->reverse._bool && !ctx->quiet._bool)
+		printf(" stdin");
+	printf("\n");
+
+	free(buf);
+	return (0);
+}
+
 int	main(int UNUSED(ac), char **av)
 {
 	t_ctx	ctx;
@@ -91,7 +120,7 @@ int	main(int UNUSED(ac), char **av)
 	if (*av)
 		process_av(&ctx, av);
 	else if (!ctx.string._str)
-		printf("stdin\n");
+		process_stdin(&ctx);
 
 	ctx_delete(&ctx);
 	return (0);
