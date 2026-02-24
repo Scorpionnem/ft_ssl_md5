@@ -6,10 +6,12 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:19 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 00:01:43 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 09:55:12 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-char	*md5(char *input);
+#include <stdint.h>
+
+char	*md5(char *input, uint32_t len);

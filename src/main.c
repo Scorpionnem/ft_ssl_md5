@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 00:37:46 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 10:13:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int	main(int UNUSED(ac), char **av)
 	if (ctx_init(&ctx, &av) == -1)
 		return (1);
 
-	ctx.fn(NULL);
+	char	*inpt = "";
+	char	*hash = ctx.fn(inpt, strlen(inpt));
+
+	printf("%s\n", hash);
+	free(hash);
 
 	ctx_delete(&ctx);
 	return (0);

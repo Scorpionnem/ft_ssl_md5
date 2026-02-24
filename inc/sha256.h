@@ -6,10 +6,12 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:02:51 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 00:03:18 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 09:55:10 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-char	*sha256(char *input);
+#include <stdint.h>
+
+char	*sha256(char *msg, uint32_t len);

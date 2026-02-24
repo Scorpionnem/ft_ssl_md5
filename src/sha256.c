@@ -6,15 +6,16 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:03:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 00:04:05 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/24 09:55:16 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sha256.h"
 #include <stdlib.h>
 
-char	*sha256(char *input)
+char	*sha256(char *msg, uint32_t len)
 {
-	(void)input;
+	(void)msg;
+	(void)len;
 	return (NULL);
 }
