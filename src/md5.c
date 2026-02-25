@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:13:15 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:30:29 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <string.h>
 #include <stdio.h>
 
-uint32_t rotl(uint32_t value, uint32_t shift)
+static uint32_t rotl(uint32_t value, uint32_t shift)
 {
 	if ((shift &= 31) == 0)
 		return (value);

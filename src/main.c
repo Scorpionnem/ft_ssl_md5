@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:16:02 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:30:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 #include <unistd.h>
 #include <errno.h>
 
-int	process(t_ctx *ctx, char *input, uint32_t len)
+static int	process(t_ctx *ctx, char *input, uint32_t len)
 {
 	ctx->fn(input, len);
 	return (0);
 }
 
-int	process_av(t_ctx *ctx, char **av)
+static int	process_av(t_ctx *ctx, char **av)
 {
 	while (*av)
 	{
@@ -65,7 +65,7 @@ int	process_av(t_ctx *ctx, char **av)
 	return (0);
 }
 
-int	process_string(t_ctx *ctx, char *str)
+static int	process_string(t_ctx *ctx, char *str)
 {
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
 		ft_printf("%s (\"%s\") = ", ctx->fn_str, str);
@@ -79,7 +79,18 @@ int	process_string(t_ctx *ctx, char *str)
 	return (0);
 }
 
-int	process_stdin(t_ctx *ctx)
+static void	print_no_nl(char *str, uint32_t len)
+{
+	uint32_t	 i = 0;
+	while (i < len)
+	{
+		if (str[i] != '\n')
+			write(1, &str[i], 1);
+		i++;
+	}
+}
+
+static int	process_stdin(t_ctx *ctx)
 {
 	char	*buf = ft_calloc(1, 1);
 	int		total_read = 0;
@@ -96,7 +107,11 @@ int	process_stdin(t_ctx *ctx)
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
 	{
 		if (ctx->echo._bool)
-			ft_printf("%s (\"%s\") = ", ctx->fn_str, buf);
+		{
+			print_no_nl(buf, total_read);
+			printf(" ");
+			fflush(stdout);
+		}
 		else
 			ft_printf("%s (stdin) = ", ctx->fn_str);
 	}
@@ -106,7 +121,10 @@ int	process_stdin(t_ctx *ctx)
 	if (ctx->reverse._bool && !ctx->quiet._bool)
 	{
 		if (ctx->echo._bool)
-			ft_printf(" \"%s\"", buf);
+		{
+			ft_printf(" ");
+			print_no_nl(buf, total_read);
+		}
 		else
 			ft_printf(" stdin");
 	}
