@@ -6,11 +6,13 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 11:46:05 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:06:44 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
+#include "libft.h"
+#include "ft_printf.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +30,7 @@ t_hash_func	get_hash_func(char *id)
 	};
 
 	for (int i = 0; i < COMMANDS_COUNT; i++)
-		if (!strcmp(commands_to_funcs[i].id, id))
+		if (!ft_strcmp(commands_to_funcs[i].id, id))
 			return (commands_to_funcs[i].fn);
 	return (NULL);
 }
@@ -47,17 +49,17 @@ int	ctx_init(t_ctx *ctx, char ***av)
 	if (*av[0] == NULL)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
-		dprintf(2, "ft_ssl: command required (see -h)\n");
+		ft_dprintf(2, "ft_ssl: command required (see -h)\n");
 		return (-1);
 	}
 	ctx->fn = get_hash_func(*av[0]);
 	if (ctx->fn == NULL)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
-		dprintf(2, "ft_ssl: Unknown command (%s)\n", *av[0]);
+		ft_dprintf(2, "ft_ssl: Unknown command (%s)\n", *av[0]);
 		return (-1);
 	}
-	ctx->fn_str = strdup(*av[0]);
+	ctx->fn_str = ft_strdup(*av[0]);
 
 	(*av)++;
 
@@ -72,22 +74,22 @@ void	ctx_delete(t_ctx *ctx)
 
 void	print_help()
 {
-	printf("\nUsage:\n  ./ft_ssl <command> [options]\n\n");
-	printf("Standard commands:\n");
-	printf("\n");
-	printf("Message Digest commands:\n");
-	printf("  md5\n");
-	printf("  sha256\n");
-	printf("\n");
-	printf("Cipher commands:\n");
-	printf("\n");
-	printf("Options:\n");
-	printf("  -h\t\tshow help message and exit\n");
-	printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
-	printf("  -q\t\tquiet mode\n");
-	printf("  -r\t\treverse the format of the output\n");
-	printf("  -s <string>\tprint the sum of <string>\n");
-	printf("\n");
+	ft_printf("\nUsage:\n  ./ft_ssl <command> [options]\n\n");
+	ft_printf("Standard commands:\n");
+	ft_printf("\n");
+	ft_printf("Message Digest commands:\n");
+	ft_printf("  md5\n");
+	ft_printf("  sha256\n");
+	ft_printf("\n");
+	ft_printf("Cipher commands:\n");
+	ft_printf("\n");
+	ft_printf("Options:\n");
+	ft_printf("  -h\t\tshow help message and exit\n");
+	ft_printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	ft_printf("  -q\t\tquiet mode\n");
+	ft_printf("  -r\t\treverse the format of the output\n");
+	ft_printf("  -s <string>\tprint the sum of <string>\n");
+	ft_printf("\n");
 }
 
 int	ctx_init_opts(t_ctx *ctx, char ***av)

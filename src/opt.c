@@ -6,11 +6,13 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:47:54 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/22 13:42:22 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 11:52:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "opt.h"
+#include "libft.h"
+#include "ft_printf.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -37,7 +39,7 @@ int	opt_ctx_add_opt(t_opt_ctx *ctx, char *id, t_opt *opt, t_opt_type type)
 
 int	opt_ctx_init(t_opt_ctx *ctx)
 {
-	memset(ctx, 0, sizeof(t_opt_ctx));
+	ft_memset(ctx, 0, sizeof(t_opt_ctx));
 	return (0);
 }
 
@@ -52,7 +54,7 @@ static int	find_opt(t_opt_ctx *ctx, char *id)
 	int	i = 0;
 	while (i < ctx->options_count)
 	{
-		if (!strcmp(ctx->options[i].id, id))
+		if (!ft_strcmp(ctx->options[i].id, id))
 			return (i);
 		i++;
 	}
@@ -86,26 +88,26 @@ int	opt_ctx_parse(t_opt_ctx *ctx, char ***av)
 				case OPT_STR:
 				{
 					if (!(*av)[i + 1])
-						return (dprintf(2, "%s requires a string argument\n", id), -1);
+						return (ft_dprintf(2, "%s requires a string argument\n", id), -1);
 					op->_str = (*av)[++i];
 					break ;
 				}
 				case OPT_INT:
 				{
 					if (!(*av)[i + 1])
-						return (dprintf(2, "%s requires an integer argument\n", id), -1);
-					op->_int = atoi((*av)[++i]);
+						return (ft_dprintf(2, "%s requires an integer argument\n", id), -1);
+					op->_int = ft_atoi((*av)[++i]);
 					break ;
 				}
 				case OPT_FLOAT:
 				{
 					if (!(*av)[i + 1])
-						return (dprintf(2, "%s requires a float argument\n", id), -1);
+						return (ft_dprintf(2, "%s requires a float argument\n", id), -1);
 					op->_float = atof((*av)[++i]);
 					break ;
 				}
 				default:
-					return (dprintf(2, "FATAL: %d invalid opt enum\n", op->type), -1);
+					return (ft_dprintf(2, "FATAL: %d invalid opt enum\n", op->type), -1);
 			}
 		}
 		else

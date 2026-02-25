@@ -6,11 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:03:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 11:18:50 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:09:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sha256.h"
+#include "libft.h"
+#include "ctx.h"
+#include "ft_printf.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -129,7 +132,7 @@ char	*sha256(char *msg, uint32_t len)
 		while (i < 64)
 			ctx.data[i++] = 0x00;
 		sha256_transform(&ctx, ctx.data);
-		memset(ctx.data, 0, 56);
+		ft_memset(ctx.data, 0, 56);
 	}
 	
 	ctx.bitlen += ctx.data_len * 8;
@@ -156,8 +159,8 @@ char	*sha256(char *msg, uint32_t len)
 		hash[i + 28] = (ctx.state[7] >> (24 - i * 8)) & 0x000000ff;
 	}
 
-	char	*res = calloc(65, sizeof(char));
 	for (uint32_t i = 0; i < 32; i++)
-		sprintf(res + (i * 2), "%02x", hash[i]);
-	return (res);
+		ft_putnbr_hex_u(hash[i], 0);
+
+	return (NULL);
 }

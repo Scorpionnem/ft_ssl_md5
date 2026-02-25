@@ -6,12 +6,13 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 10:11:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:13:15 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "md5.h"
 #include "ctx.h"
+#include "libft.h"
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -59,7 +60,7 @@ char	*md5(char *msg, uint32_t len)
 	uint32_t	number_blocks = ((len + 8) >> 6) + 1;
 	uint32_t	total_length = number_blocks << 6;
 
-	uint8_t	*padding_bytes = calloc((total_length - len), sizeof(uint8_t));
+	uint8_t	*padding_bytes = ft_calloc((total_length - len), sizeof(uint8_t));
 	uint64_t	padding_bytes_size = (total_length - len) * sizeof(uint8_t); 
 	padding_bytes[0] = (uint8_t)0x80;
 
@@ -138,10 +139,9 @@ char	*md5(char *msg, uint32_t len)
 		}
 	}
 	
-	char	*res = calloc(33, sizeof(char));
 	for (uint32_t i = 0; i < 16; i++)
-		sprintf(res + (i * 2), "%02x", hash[i]);
+		ft_putnbr_hex_u(hash[i], 0);
 
 	free(padding_bytes);
-	return (res);
+	return (NULL);
 }

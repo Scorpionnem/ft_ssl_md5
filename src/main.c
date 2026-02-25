@@ -6,11 +6,13 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 11:37:05 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:16:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
+#include "ft_printf.h"
+#include "libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,11 +26,7 @@
 
 int	process(t_ctx *ctx, char *input, uint32_t len)
 {
-	char	*hash = ctx->fn(input, len);
-	if (!hash)
-		return (-1);
-	printf("%s", hash);
-	free(hash);
+	ctx->fn(input, len);
 	return (0);
 }
 
@@ -39,7 +37,7 @@ int	process_av(t_ctx *ctx, char **av)
 		int	fd = open(*av, O_RDONLY);
 		if (fd == -1)
 		{
-			dprintf(2, "ft_ssl: %s: %s\n", *av, strerror(errno));
+			ft_dprintf(2, "ft_ssl: %s: %s\n", *av, strerror(errno));
 			av++;
 			continue ;
 		}
@@ -49,16 +47,16 @@ int	process_av(t_ctx *ctx, char **av)
 
 		char	*input = mmap(NULL, stats.st_size, PROT_READ, MAP_SHARED, fd, 0);
 		if (input == (void*)-1)
-			return (dprintf(2, "ft_ssl: mmap: %s\n", strerror(errno)), -1);
+			return (ft_dprintf(2, "ft_ssl: mmap: %s\n", strerror(errno)), -1);
 
 		if (!ctx->reverse._bool && !ctx->quiet._bool)
-			printf("%s (%s) = ", ctx->fn_str, *av);
+			ft_printf("%s (%s) = ", ctx->fn_str, *av);
 
 		process(ctx, input, stats.st_size);
 
 		if (ctx->reverse._bool && !ctx->quiet._bool)
-			printf(" %s", *av);
-		printf("\n");
+			ft_printf(" %s", *av);
+		ft_printf("\n");
 
 		munmap(input, stats.st_size);
 		close(fd);
@@ -70,20 +68,20 @@ int	process_av(t_ctx *ctx, char **av)
 int	process_string(t_ctx *ctx, char *str)
 {
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
-		printf("%s (\"%s\") = ", ctx->fn_str, str);
+		ft_printf("%s (\"%s\") = ", ctx->fn_str, str);
 
-	process(ctx, str, strlen(str));
+	process(ctx, str, ft_strlen(str));
 
 	if (ctx->reverse._bool && !ctx->quiet._bool)
-		printf(" \"%s\"", str);
-	printf("\n");
+		ft_printf(" \"%s\"", str);
+	ft_printf("\n");
 
 	return (0);
 }
 
 int	process_stdin(t_ctx *ctx)
 {
-	char	*buf = calloc(1, 1);
+	char	*buf = ft_calloc(1, 1);
 	int		total_read = 0;
 
 	while (1)
@@ -98,9 +96,9 @@ int	process_stdin(t_ctx *ctx)
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
 	{
 		if (ctx->echo._bool)
-			printf("%s (\"%s\") = ", ctx->fn_str, buf);
+			ft_printf("%s (\"%s\") = ", ctx->fn_str, buf);
 		else
-			printf("%s (stdin) = ", ctx->fn_str);
+			ft_printf("%s (stdin) = ", ctx->fn_str);
 	}
 
 	process(ctx, buf, total_read);
@@ -108,11 +106,11 @@ int	process_stdin(t_ctx *ctx)
 	if (ctx->reverse._bool && !ctx->quiet._bool)
 	{
 		if (ctx->echo._bool)
-			printf(" \"%s\"", buf);
+			ft_printf(" \"%s\"", buf);
 		else
-			printf(" stdin");
+			ft_printf(" stdin");
 	}
-	printf("\n");
+	ft_printf("\n");
 
 	free(buf);
 	return (0);

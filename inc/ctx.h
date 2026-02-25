@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/24 10:37:26 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/25 12:08:45 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,5 @@ typedef struct	s_ctx
 
 int		ctx_init(t_ctx *ctx, char ***av);
 void	ctx_delete(t_ctx *ctx);
+
+int	ft_putnbr_hex_u(unsigned long int n, int level);
